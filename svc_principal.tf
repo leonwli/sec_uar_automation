@@ -62,8 +62,8 @@ resource "azuread_app_role_assignment" "group_read_all" {
 }
 
 # Grant Application.Read.All
-resource "azuread_app_role_assignment" "sites_readwrite_all" {
-  app_role_id         = azuread_service_principal.msgraph.app_role_ids["Application.ReadWrite.All"] # sites.Read.All
+resource "azuread_app_role_assignment" "apps_readwrite_all" {
+  app_role_id         = azuread_service_principal.msgraph.app_role_ids["Application.Read.All"] # Application.Read.All
   principal_object_id = azuread_service_principal.sec_uar_sp.object_id
   resource_object_id  = azuread_service_principal.msgraph.object_id
 }

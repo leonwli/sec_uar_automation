@@ -23,3 +23,34 @@ variable "automation_account" {
   type        = string
 }
 
+variable "resource_group" {
+  default = "secautomation-rg"
+}
+
+variable "automation_account" {
+  default = "secautomation"
+}
+
+variable "runbook_name" {
+  default = "Export-AppAssignments"
+}
+
+variable "runbook_script_path" {
+  default = "./runbook.ps1"
+}
+
+variable "pfx_path" {
+  default = "./cert.pfx"
+}
+
+variable "pfx_password" {
+  description = "Password for the PFX certificate"
+  type        = string
+  sensitive   = true
+}
+
+variable "connection_name" {
+  default = "sec_uar_sp_cert_sharepoint"
+}
+
+variable "tenant_id" {}
