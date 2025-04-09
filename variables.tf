@@ -23,18 +23,8 @@ variable "automation_account" {
   type        = string
 }
 
-variable "resource_group" {
-  type    = string
-  default = "secautomation-rg"
-}
-
-variable "automation_account" {
-  type    = string
-  default = "secautomation"
-}
-
 variable "runbook_name" {
-  description = "Name of the runbook created"
+  description = "Name of the runbook to create"
   type        = string
 }
 
@@ -43,18 +33,13 @@ variable "runbook_script_path" {
   type        = string
 }
 
-variable "pfx_path" {
-  description = "file path of the certificate private key"
-  type        = string
-}
-
-variable "pfx_password" {
-  description = "Password for the PFX certificate"
-  type        = string
-  sensitive   = true
-}
-
 variable "connection_name" {
   description = "sec_uar_sp_cert_sharepoint connection name"
   type        = string
+}
+
+variable "storage_container_scripts" {
+  description = "storage_container name"
+  type        = string
+  default     = "automation_script_container"
 }
