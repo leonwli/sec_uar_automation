@@ -1,5 +1,5 @@
-<#
-This code uses Service Principal with Self Signed Certificate to authenticate to MGGraph to pull all SSO enabled enterprise APP and export the assigned memebers/groups
+
+<#This code uses Service Principal with Self Signed Certificate to authenticate to MGGraph to pull all SSO enabled enterprise APP and export the assigned memebers/groups
 to a csv and upload it to a SharePoint Site.
 
 Modules required:
@@ -7,6 +7,7 @@ Modules required:
 If it is running on a Windows PC locally, Microsoft.MGGraph SDK is recommended
 
 If it is running in a Azure Automation runbook, the Automation account must have the following modules imported and have the modules called out in the PS code:
+#>
 Import-Module Microsoft.Graph.Applications -Verbose:$false
 Import-Module Microsoft.Graph.Authentication -Verbose:$false
 Import-Module Microsoft.Graph.Users -Verbose:$false
@@ -16,24 +17,30 @@ Import-Module Microsoft.Graph.Identity.DirectoryManagement -Verbose:$false
 Import-Module Microsoft.Graph.sites -Verbose:$false
 Import-Module Microsoft.Graph.DirectoryObjects -Verbose:$false
 
-The following code is required for using the Azure Automation Connection for required values
+# Below is required if run directly from a PC
+<#
+$clientId = "9087070d-25c8-4249-b1a6-1d6456104d6c"
+$tenantId = "847511aa-62b7-475e-a134-1aa2cd6c720e"
+$certThumbprint = "aa57b33eb7e9041b62e4cc2012d12f4e8cf4f237"
+#>
+
+# The following code is required for using the Azure Automation Connection for required values
 # Requires an Automation Connection named 'sec_uar_automation_connect'
 $connectionName = "sec_uar_automation_connect"
 $connection = Get-AutomationConnection -Name $connectionName
 $cert = Get-AutomationCertificate -Name "uar-automation-selfsigned-sp-cert"
-
-#>
-$clientId = "9087070d-25c8-4249-b1a6-1d6456104d6c"
-$tenantId = "847511aa-62b7-475e-a134-1aa2cd6c720e"
-$certThumbprint = "aa57b33eb7e9041b62e4cc2012d12f4e8cf4f237"
-
+$tenantId = $connection.TenantId
+$application_id = $connection.ApplicationId
 
 # Connect to Microsoft Graph with certificate
-Connect-MgGraph -ClientId $clientId -TenantId $tenantId -CertificateThumbprint $certThumbprint
+# Connect-MgGraph -ClientId $clientId -TenantId $tenantId -CertificateThumbprint $certThumbprint
+Connect-MgGraph -ClientId $application_id -TenantId $tenantId -CertificateThumbprint $cert.Thumbprint
+$sitename = "abits.com.au"
 $libraryName = "Documents"
 
 # Get the SharePoint site object using hostname and path
-$site = Get-MgSite -Search "abits.com.au"
+$site = Get-MgSite -Search $sitename
+
 # Get the document library (drive)
 $drive = Get-MgSiteDrive -SiteId $site.Id | Where-Object { $_.Name -eq $libraryName }
 
@@ -86,7 +93,8 @@ $driveId = $drive.Id
 $folderName = "Sec_UAR_App_Assignment-$dateStamp"
 
 # Create folder in SharePoint using Graph API directly
-$folderItem = Invoke-MgGraphRequest -Method POST `
+#$folderItem = 
+Invoke-MgGraphRequest -Method POST `
     -Uri "https://graph.microsoft.com/v1.0/drives/$driveId/root/children" `
     -Body @{ 
         name = $folderName
