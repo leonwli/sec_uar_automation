@@ -45,6 +45,60 @@ resource "azurerm_automation_module" "graph_sites" {
   }
 }
 
+resource "azurerm_automation_module" "graph_Users" {
+  name                    = "Microsoft.Graph.Users"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = data.azurerm_automation_account.existing.name
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.Users"
+  }
+}
+
+resource "azurerm_automation_module" "graph_Groups" {
+  name                    = "Microsoft.Graph.Groups"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = data.azurerm_automation_account.existing.name
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.Groups"
+  }
+}
+
+resource "azurerm_automation_module" "graph_Files" {
+  name                    = "Microsoft.Graph.Files"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = data.azurerm_automation_account.existing.name
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.Files"
+  }
+}
+
+resource "azurerm_automation_module" "graph_DirectoryObjects" {
+  name                    = "Microsoft.Graph.DirectoryObjects"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = data.azurerm_automation_account.existing.name
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.DirectoryObjects"
+  }
+}
+
+resource "azurerm_automation_module" "graph_Identity_DirectoryManagement" {
+  name                    = "Microsoft.Graph.Identity.DirectoryManagement"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = data.azurerm_automation_account.existing.name
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.DirectoryObjects"
+  }
+}
+
+resource "azurerm_automation_module" "graph_authentication" {
+  name                    = "Microsoft.Graph.Authentication"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = data.azurerm_automation_account.existing.name
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.Authentication"
+  }
+}
+
 resource "azurerm_automation_runbook" "export_assignments" {
   name                    = var.runbook_name
   location                = var.location

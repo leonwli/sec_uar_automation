@@ -10,3 +10,8 @@ variable "pfx_path" {
   default     = "value"
 }
 
+variable "storage_container_scripts" {
+  description = "storage_container name"
+  type        = string
+  default     = "automation_script_container"
+}

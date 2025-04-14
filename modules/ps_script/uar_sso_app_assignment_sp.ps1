@@ -2,12 +2,12 @@
 <#This code uses Service Principal with Self Signed Certificate to authenticate to MGGraph to pull all SSO enabled enterprise APP and export the assigned memebers/groups
 to a csv and upload it to a SharePoint Site.
 
-Modules required:
-
 If it is running on a Windows PC locally, Microsoft.MGGraph SDK is recommended
 
 If it is running in a Azure Automation runbook, the Automation account must have the following modules imported and have the modules called out in the PS code:
 #>
+
+#Modules required:
 Import-Module Microsoft.Graph.Applications -Verbose:$false
 Import-Module Microsoft.Graph.Authentication -Verbose:$false
 Import-Module Microsoft.Graph.Users -Verbose:$false
@@ -19,9 +19,9 @@ Import-Module Microsoft.Graph.DirectoryObjects -Verbose:$false
 
 # Below is required if run directly from a PC
 <#
-$clientId = "9087070d-25c8-4249-b1a6-1d6456104d6c"
-$tenantId = "847511aa-62b7-475e-a134-1aa2cd6c720e"
-$certThumbprint = "aa57b33eb7e9041b62e4cc2012d12f4e8cf4f237"
+$clientId = "9087070d-25c8-4249-b1a6-1d6456104584c"
+$tenantId = "847511aa-62b7-475e-a134-1aa2c555620e"
+$certThumbprint = "aa57b33eb7e9041b62e4cc2012d12f4e8cf4f245"
 #>
 
 # The following code is required for using the Azure Automation Connection for required values

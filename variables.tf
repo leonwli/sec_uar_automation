@@ -3,11 +3,6 @@ variable "uar_ent_app_name" {
   type        = string
 }
 
-variable "sec_uar_ps_script_name" {
-  description = "Name for the enterprise app to authenticate to Entra and SharePoint"
-  type        = string
-}
-
 variable "resource_group_name" {
   description = "Name of the resource group"
   type        = string
@@ -38,8 +33,3 @@ variable "connection_name" {
   type        = string
 }
 
-variable "storage_container_scripts" {
-  description = "storage_container name"
-  type        = string
-  default     = "automation_script_container"
-}

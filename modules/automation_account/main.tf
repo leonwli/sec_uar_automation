@@ -8,7 +8,6 @@ resource "azurerm_automation_account" "automation_account" {
   resource_group_name = data.azurerm_resource_group.security_rg.name
   sku_name            = "Basic"
   identity {
-    type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.function_app_managed_identity.id]
+    type         = "SystemAssigned, UserAssigned"
   }
 }
