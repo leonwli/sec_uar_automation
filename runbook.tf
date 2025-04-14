@@ -7,7 +7,7 @@ resource "azurerm_automation_certificate" "sp_cert" {
   name                    = "cert-${var.connection_name}"
   resource_group_name     = var.resource_group_name
   automation_account_name = data.azurerm_automation_account.existing.name
-  base64                  = filebase64("${path.module}/../ps-scripts/uar_sso_app_assignment_sp.ps1")
+  base64                  = filebase64("${path.module}/../cert/uar-automation-selfsigned-sp-cert.pfx")
   description             = "Service Principal Certificate"
   exportable              = false
   thumbprint              = "" # Optional: can be left empty if unknown
@@ -86,7 +86,7 @@ resource "azurerm_automation_module" "graph_Identity_DirectoryManagement" {
   resource_group_name     = var.resource_group_name
   automation_account_name = data.azurerm_automation_account.existing.name
   module_link {
-    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.DirectoryObjects"
+    uri = "https://www.powershellgallery.com/api/v2/package/Microsoft.Graph.Identity.DirectoryManagement"
   }
 }
 
@@ -104,9 +104,9 @@ resource "azurerm_automation_runbook" "export_assignments" {
   location                = var.location
   resource_group_name     = var.resource_group_name
   automation_account_name = data.azurerm_automation_account.existing.name
-  log_verbose             = true
-  log_progress            = true
+  runbook_type            = "PowerShell72"
+  log_progress            = "true"
+  log_verbose             = "true"
   description             = "Export app assignments and upload to SharePoint"
-  runbook_type            = "PowerShell"
   content                 = file("${path.module}/../ps-scripts/uar_sso_app_assignment_sp.ps1")
 }
